@@ -4,32 +4,47 @@
 Imprimir a lista de crianças agrupadas por sala
 que frequentas cada uma das atividades.
 """
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 # Dados
-sala1 = ["Erik", "Maia", "Gustavo", "Manuel", "Sofia", "Joana"]
-sala2 = ["Joao", "Antonio", "Carlos", "Maria", "Isolda"]
 
-aula_ingles = ["Erik", "Maia", "Joana", "Carlos", "Antonio"]
-aula_musica = ["Erik", "Carlos", "Maria"]
-aula_danca = ["Gustavo", "Sofia", "Joana", "Antonio"]
+salas = {
+    "sala1": ["Erik", "Maia", "Gustavo", "Manuel", "Sofia", "Joana"],
+    "sala2": ["Joao", "Antonio", "Carlos", "Maria", "Isolda"],
+}
+
+aulas = {
+    "inglês": ["Erik", "Maia", "Joana", "Carlos", "Antonio"],
+    "música": ["Erik", "Carlos", "Maria"],
+    "dança": ["Gustavo", "Sofia", "Joana", "Antonio"],
+}
 
 # Listar alunos em cada atividade por sala
 
-atividades = [
-    ("inglês", aula_ingles),
-    ("música", aula_musica),
-    ("dança", aula_danca),
-]
+atividades = {
+    "inglês": {
+        "sala1": [],
+        "sala2": [],
+    },
+    "música": {
+        "sala1": [],
+        "sala2": [],
+    },
+    "dança": {
+        "sala1": [],
+        "sala2": [],
+    }
+}
 
-for nome_atividade, atividade in atividades:
-    
-    print(f"Alunos da atividade {nome_atividade}:")
+for aula, alunos in aulas.items():
+    for aluno in alunos:
+        if aluno in salas["sala1"]:
+            atividades[aula]["sala1"].append(aluno) 
+        elif aluno in salas["sala2"]:
+            atividades[aula]["sala2"].append(aluno)
+
+    print(f"Alunos da atividade {aula}:")
     print("-" * 40)
-
-    atividade_sala1 = set(sala1) & set(atividade)
-    atividade_sala2 = set(sala2).intersection(set(atividade))
-
-    print("Sala 1: ", atividade_sala1)
-    print("Sala 2: ", atividade_sala2)
-    print("-" * 40)
+    print("- Sala 1: ", atividades[aula]["sala1"])
+    print("- Sala 2: ", atividades[aula]["sala2"])
+    print()
