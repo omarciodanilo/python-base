@@ -25,10 +25,14 @@
         n1: 5
         n2: 4
         9
+        
+    Os resultados serão salvos em `prefixcalc.log`
 """
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 
+import os
 import sys
+from datetime import datetime
 
 """Minha solução
 arguments = {
@@ -67,8 +71,8 @@ if not arguments:
     operation = input("Insira a operação desejada: ")
     n1 = input("Insira o primeiro número: ")
     n2 = input("Insira o segundo número: ")
-
-if len(arguments) != 3:
+    arguments = [operation, n1, n2]
+elif len(arguments) != 3:
     print("Quantidade de argumentos inválida.")
     print("Exemplo: sum 1 2")
     sys.exit(1)
@@ -104,6 +108,16 @@ if operation == "mul":
     result = n1 * n2
 if operation == "div":
     result = n1 / n2
+
+path = os.curdir
+filepath = os.path.join(path, "prefixcalc.log")
+timestamp = datetime.now().isoformat()
+user = os.getenv('USER', 'anonymous')
+
+with open(filepath, "a") as file_:
+    file_.write(f"{timestamp};{user};{operation};{n1};{n2};{result}\n")
+# Outra opção para adicionar a linha acima ao arquivo `prefixcalc.log`
+# print(f"{timestamp};{user};{operation};{n1};{n2};{result}", file=open(filename, "a"))
 
 print(f"Operação: {operation}")
 print(f"n1: {n1}")
