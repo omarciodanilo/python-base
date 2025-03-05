@@ -46,7 +46,7 @@ except FileNotFoundError as e:
     print("[Error] File names.txt not found.")
     # print(f"{str(e)}.") # Imprimir mensagem de erro da exceção
     sys.exit(1)
-    # TO-DO: usar retry
+    # TODO: usar retry
 # else:
     # print("else no try, executado apenas se o não houver exceção capturada.")
 # finally:

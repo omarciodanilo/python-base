@@ -3,7 +3,7 @@
 """ Bloco de Notas
     
     1. Criar notas
-    1.1. [TO-DO] Passar o título da nota como parâmetro
+    1.1. [TODO] Passar o título da nota como parâmetro
         $ notes.py new "título da nota"
         tag: tag-da-nota
         text:
@@ -18,15 +18,15 @@
     2. Ler notas
     2.1. Passar o nome da tag como parâmetro
         $ notes.y read --tag=nome-da-tag
-    2.2. [TO-DO] Passar o título como parâmetro
+    2.2. [TODO] Passar o título como parâmetro
         $ notes.py read --title=título-da-nota
-    2.3. [TO-DO] Passar uma palavra-chave como parâmetro (busca realizada na tag, no título e no texto)
+    2.3. [TODO] Passar uma palavra-chave como parâmetro (busca realizada na tag, no título e no texto)
         $ notes.py read --search=palavra-chave
 
     3. Remover notas
-    3.1. [TO-DO] Baseadas na tag
+    3.1. [TODO] Baseadas na tag
         $ notes.py remove --tag=tag-da-nota
-    3.2. [TO-DO] Baseadas no título
+    3.2. [TODO] Baseadas no título
         $ notas.py remove --title=título-da-nota
 
 """
@@ -54,7 +54,7 @@ if arguments[0] in cmds[1:]:
         sys.exit(1)
 
 # Código para leitura das notas
-# TO-DO: ler usando separação com tab (/t)
+# TODO: ler usando separação com tab (/t)
 if arguments[0] == "read":
     tag_key, tag_value = arguments[1].split("=")
     for line in open(filepath):
@@ -63,7 +63,7 @@ if arguments[0] == "read":
             print(f"tag: {tag}\ntext: {text}")
 
 # Código para criação das notas
-# TO-DO: salvar usando separação com tab (/t)
+# TODO: salvar usando separação com tab (/t)
 if arguments[0] == "new":
     tag = input("tag: ")
     text = input("text:\n")
