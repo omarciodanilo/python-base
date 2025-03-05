@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 """ Bloco de Notas
+
+
+    ### TODO: VERIFICAR ONDE PODEM SER ADICIONADAS EXCEPTIONS (TRY / EXCEPT)
     
     1. Criar notas
     1.1. [TODO] Passar o título da nota como parâmetro

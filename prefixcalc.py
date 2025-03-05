@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Calculadora Prefix
 
+### TODO: REFATORAR E DEIXAR TUDO EM INGLÊS,
+### PASSANDO AS MENSAGENS DE ERRO DIREITO (except ERRO as e)
+
     Funcionamento:
         
         [operação] [n1] [n2]
@@ -73,7 +76,7 @@ if not arguments:
     n2 = input("Insira o segundo número: ")
     arguments = [operation, n1, n2]
 elif len(arguments) != 3:
-    print("Quantidade de argumentos inválida.")
+    print("[ERRO] Quantidade de argumentos inválida.")
     print("Exemplo: sum 1 2")
     sys.exit(1)
 
@@ -81,21 +84,48 @@ operation, *nums = arguments
 
 valid_operations = ("sum", "sub", "mul", "div")
 if operation not in valid_operations:
-    print("Operação inválida.")
+    print("[ERRO] Operação inválida.")
     print(valid_operations)
     sys.exit(1)
 
 validated_nums = []
 for num in nums:
-    # TODO: repetição com while + exceptions
+    # TODO: repetição com while
+    """
+    # Opção 1
     if not num.replace(".","").isdigit():
-        print(f"Número inválido `{num}`.")
+        print(f"[ERRO] Número '{num}' inválido.")
         sys.exit(1)
     if "." in num:
         num = float(num)
     else:
         num = int(num)
-        validated_nums.append(num)
+    validated_nums.append(num)
+    """
+
+    """
+    # Opção 2
+    try:
+        num = float(num)
+    except ValueError:
+        print(f"[ERRO] Número '{num}' inválido.")
+        sys.exit(1)
+    try:
+        num = int(num)
+    except ValueError:
+        print(f"[ERRO] Número '{num}' inválido.")
+        sys.exit(1)
+    validated_nums.append(num)
+
+    """
+
+    # Opção 3
+    try:
+        if float(num) or int(num):
+            validated_nums.append(num)
+    except ValueError:
+            print(f"[ERRO] Número '{num}' inválido.")
+            sys.exit(1)
 
 n1, n2 = validated_nums
 
@@ -114,12 +144,16 @@ filepath = os.path.join(path, "prefixcalc.log")
 timestamp = datetime.now().isoformat()
 user = os.getenv('USER', 'anonymous')
 
-with open(filepath, "a") as file_:
-    file_.write(f"{timestamp};{user};{operation};{n1};{n2};{result}\n")
-# Outra opção para adicionar a linha acima ao arquivo `prefixcalc.log`
-# print(f"{timestamp};{user};{operation};{n1};{n2};{result}", file=open(filename, "a"))
-
 print(f"Operação: {operation}")
 print(f"n1: {n1}")
 print(f"n2: {n2}")
 print(f"Resultado: {result}")
+
+try:
+    with open(filepath, "a") as file_:
+        file_.write(f"{timestamp};{user};{operation};{n1};{n2};{result}\n")
+    # Outra opção para adicionar a linha acima ao arquivo `prefixcalc.log`
+    # print(f"{timestamp};{user};{operation};{n1};{n2};{result}", file=open(filename, "a"))
+except PermissionError:
+    # TODO: Logging
+    print(f"[ERRO] Permissão negada para o caminho '{filepath}'")

@@ -20,7 +20,7 @@ Execução:
     ./hello.py
 """
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 __author__ = "Márcio Almeida"
 __license__ = "Unlicense"
 
@@ -33,13 +33,19 @@ arguments = {
 }
 
 for arg in sys.argv[1:]:
-    # TODO: tratar ValueError
-    key, value = arg.split("=")
+    # TODO: substituir mensagens pro usuário com Logging
+    try:
+        key, value = arg.split("=")
+    except ValueError as e:
+        print(f"[Error] {str(e)}.")
+        print(f"You typed '{arg}'. You need to use '='.")
+        print("Example: --lang=fr_FR")
+        sys.exit(1)
     key = key.lstrip("-").strip()
     value = value.strip()
     if key not in arguments:
         print(f"Invalid option `{key}`")
-        sys.exit()
+        sys.exit(1)
     arguments[key] = value
 
 current_language = arguments["lang"]
@@ -59,4 +65,9 @@ msg = {
     "fr_FR": "Bonjour, Monde!",
 }
 
-print(msg[current_language] * int(arguments["count"]))
+try:
+    print(msg[current_language] * int(arguments["count"]))
+except KeyError as e:
+    print(f"[ERROR] Language {str(e)} is invalid.")
+    print(f"Supported languages: {list(msg.keys())}")
+    sys.exit(1)
