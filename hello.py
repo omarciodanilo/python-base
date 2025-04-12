@@ -26,6 +26,17 @@ __license__ = "Unlicense"
 
 import os
 import sys
+import logging
+
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+log = logging.Logger("teste", log_level)
+ch = logging.StreamHandler()
+ch.setLevel(log_level)
+fmt = logging.Formatter(
+        '%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s'
+        )
+ch.setFormatter(fmt)
+log.addHandler(ch)
 
 arguments = {
     "lang": None,
@@ -33,13 +44,17 @@ arguments = {
 }
 
 for arg in sys.argv[1:]:
-    # TODO: substituir mensagens pro usuário com Logging
     try:
         key, value = arg.split("=")
     except ValueError as e:
+        log.error(
+                "%s. You typed %s, but you need to use '='. Try with --key=value, as in: --lang=fr_FR", str(e), arg
+        )
+        """
         print(f"[Error] {str(e)}.")
         print(f"You typed '{arg}'. You need to use '='.")
         print("Example: --lang=fr_FR")
+        """
         sys.exit(1)
     key = key.lstrip("-").strip()
     value = value.strip()
