@@ -36,6 +36,17 @@ __version__ = "0.1.2"
 import os
 import sys
 from datetime import datetime
+import logging
+
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+log = logging.Logger("teste", log_level)
+ch = logging.StreamHandler()
+ch.setLevel(log_level)
+fmt = logging.Formatter(
+        '%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s'
+        )
+ch.setFormatter(fmt)
+log.addHandler(ch)
 
 """Minha solução
 arguments = {
@@ -103,7 +114,6 @@ for num in nums:
     validated_nums.append(num)
     """
 
-    """
     # Opção 2
     try:
         num = float(num)
@@ -116,16 +126,6 @@ for num in nums:
         print(f"[ERRO] Número '{num}' inválido.")
         sys.exit(1)
     validated_nums.append(num)
-
-    """
-
-    # Opção 3
-    try:
-        if float(num) or int(num):
-            validated_nums.append(num)
-    except ValueError:
-            print(f"[ERRO] Número '{num}' inválido.")
-            sys.exit(1)
 
 n1, n2 = validated_nums
 
@@ -156,4 +156,5 @@ try:
     # print(f"{timestamp};{user};{operation};{n1};{n2};{result}", file=open(filename, "a"))
 except PermissionError:
     # TODO: Logging
-    print(f"[ERRO] Permissão negada para o caminho '{filepath}'")
+    # print(f"[ERRO] Permissão negada para o caminho '{filepath}'")
+    log.error("Permissão negada para o caminho %s", filepath)
