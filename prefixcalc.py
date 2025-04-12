@@ -155,6 +155,5 @@ try:
     # Outra opção para adicionar a linha acima ao arquivo `prefixcalc.log`
     # print(f"{timestamp};{user};{operation};{n1};{n2};{result}", file=open(filename, "a"))
 except PermissionError:
-    # TODO: Logging
     # print(f"[ERRO] Permissão negada para o caminho '{filepath}'")
     log.error("Permissão negada para o caminho %s", filepath)
