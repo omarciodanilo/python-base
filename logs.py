@@ -13,7 +13,7 @@ from logging import handlers
 6. Adicionar handler à instância de log criada
 """
 
-# TODO: transformar esses passos numa função
+# TODO: BOILERPLATE - transformar esses passos numa função
 # TODO: usar lib (loguru)
 # Usuário pode controlar o nível de log através de variável de ambiente, executando no terminal, por exemplo: export LOG_LEVEL=DEBUG
 log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
