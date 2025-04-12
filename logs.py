@@ -2,6 +2,7 @@
 
 import os
 import logging
+from logging import handlers
 
 """
 1. Criar instância personalizada de logging
@@ -17,13 +18,21 @@ import logging
 # Usuário pode controlar o nível de log através de variável de ambiente, executando no terminal, por exemplo: export LOG_LEVEL=DEBUG
 log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
 log = logging.Logger("teste", log_level) # log = logging.Logger("nome do logger", logging.LEVEL) --> log = logging.Logger("teste", logging.DEBUG)
-ch = logging.StreamHandler() # StreamHandler: objeto que permite escrever em qualquer destino (como um arquivo); sem parâmetros, envia para stderr
-ch.setLevel(log_level) # ch.setLevel(logging.DEBUG)
+# ch = logging.StreamHandler() # 'ch' é ConsoleHandler (StreamHandler: objeto que permite escrever no console/terminal; sem parâmetros, envia para stderr)
+# ch.setLevel(log_level) # ch.setLevel(logging.DEBUG)
+fh = handlers.RotatingFileHandler(
+        "meulog.log", # nome do arquivo
+        maxBytes=100, # tamanho máximo do arquivo em bytes; recomendado é 10**6 que dá 1MB
+        backupCount=10, # quantidade de arquivos para manter no histórico de backup
+)
+fh.setLevel(log_level)
 fmt = logging.Formatter(
         '%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s'
         )
-ch.setFormatter(fmt)
-log.addHandler(ch)
+# ch.setFormatter(fmt)
+# log.addHandler(ch)
+fh.setFormatter(fmt)
+log.addHandler(fh)
 
 """
 log.debug("mensagem pro dev, qa, sysadmin")
