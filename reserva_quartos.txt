@@ -1,8 +1,3 @@
-# Arquivo relacionado ao script `reserva.py`
-# Lista de quartos para reservar
-# Código do quarto, nome do quarto, valor da diária
-
-#código,nome,diaria
 1,Suíte Master,500
 2,Quarto Família,200
 3,Quarto Single,100
